@@ -6,6 +6,7 @@ API REST desarrollada con Spring Boot 3.2 para la gestión de pólizas de arrend
 
 - Java 17+
 - Maven 3.8+
+- Lombok plugin
 
 ## Ejecución
 
