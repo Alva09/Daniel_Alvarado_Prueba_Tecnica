@@ -1,0 +1,404 @@
+{
+  "info": {
+    "name": "Gestión de Pólizas API",
+    "description": "Colección de endpoints para la API de Gestión de Pólizas - Módulo 2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "123456",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Pólizas",
+      "item": [
+        {
+          "name": "Crear póliza INDIVIDUAL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"INDIVIDUAL\",\n  \"fechaInicioVigencia\": \"2025-06-01\",\n  \"mesesVigencia\": 12,\n  \"canonMensual\": 1800000,\n  \"nombreAsegurado\": \"Laura Gómez\",\n  \"documentoAsegurado\": \"1033445566\",\n  \"direccionInmueble\": \"Calle 72 #10-45, Bogotá\",\n  \"valorAsegurado\": 21600000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/polizas",
+              "host": ["{{base_url}}"],
+              "path": ["polizas"]
+            }
+          }
+        },
+        {
+          "name": "Crear póliza COLECTIVA",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"COLECTIVA\",\n  \"fechaInicioVigencia\": \"2025-07-01\",\n  \"mesesVigencia\": 12,\n  \"canonMensual\": 2500000,\n  \"nombreAsegurado\": \"Roberto Díaz\",\n  \"documentoAsegurado\": \"1077889900\",\n  \"direccionInmueble\": \"Avenida El Dorado #68-50, Bogotá\",\n  \"valorAsegurado\": 30000000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/polizas",
+              "host": ["{{base_url}}"],
+              "path": ["polizas"]
+            }
+          }
+        },
+        {
+          "name": "Crear póliza INDIVIDUAL sin riesgo (Debe fallar 400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"INDIVIDUAL\",\n  \"fechaInicioVigencia\": \"2025-06-01\",\n  \"mesesVigencia\": 12,\n  \"canonMensual\": 1800000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/polizas",
+              "host": ["{{base_url}}"],
+              "path": ["polizas"]
+            }
+          }
+        },
+        {
+          "name": "Listar todas las pólizas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas",
+              "host": ["{{base_url}}"],
+              "path": ["polizas"]
+            }
+          }
+        },
+        {
+          "name": "Listar pólizas por tipo INDIVIDUAL",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas?tipo=INDIVIDUAL",
+              "host": ["{{base_url}}"],
+              "path": ["polizas"],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "INDIVIDUAL"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar pólizas por tipo COLECTIVA",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas?tipo=COLECTIVA",
+              "host": ["{{base_url}}"],
+              "path": ["polizas"],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "COLECTIVA"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar pólizas por estado VIGENTE",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas?estado=VIGENTE",
+              "host": ["{{base_url}}"],
+              "path": ["polizas"],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "VIGENTE"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar pólizas por tipo y estado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas?tipo=COLECTIVA&estado=VIGENTE",
+              "host": ["{{base_url}}"],
+              "path": ["polizas"],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "COLECTIVA"
+                },
+                {
+                  "key": "estado",
+                  "value": "VIGENTE"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar riesgos de póliza (ID: 2 - Colectiva)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas/2/riesgos",
+              "host": ["{{base_url}}"],
+              "path": ["polizas", "2", "riesgos"]
+            }
+          }
+        },
+        {
+          "name": "Renovar póliza (ID: 1 - Individual vigente)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas/1/renovar",
+              "host": ["{{base_url}}"],
+              "path": ["polizas", "1", "renovar"]
+            }
+          }
+        },
+        {
+          "name": "Renovar póliza (ID: 2 - Colectiva vigente)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas/2/renovar",
+              "host": ["{{base_url}}"],
+              "path": ["polizas", "2", "renovar"]
+            }
+          }
+        },
+        {
+          "name": "Renovar póliza CANCELADA (ID: 3 - Debe fallar)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas/3/renovar",
+              "host": ["{{base_url}}"],
+              "path": ["polizas", "3", "renovar"]
+            }
+          }
+        },
+        {
+          "name": "Cancelar póliza (ID: 2 - Colectiva)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas/2/cancelar",
+              "host": ["{{base_url}}"],
+              "path": ["polizas", "2", "cancelar"]
+            }
+          }
+        },
+        {
+          "name": "Agregar riesgo a póliza COLECTIVA (ID: 2)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreAsegurado\": \"Ana García\",\n  \"documentoAsegurado\": \"1055667788\",\n  \"direccionInmueble\": \"Calle 50 #10-30, Medellín\",\n  \"valorAsegurado\": 20000000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/polizas/2/riesgos",
+              "host": ["{{base_url}}"],
+              "path": ["polizas", "2", "riesgos"]
+            }
+          }
+        },
+        {
+          "name": "Agregar riesgo a póliza INDIVIDUAL (ID: 1 - Debe fallar)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreAsegurado\": \"Pedro Martínez\",\n  \"documentoAsegurado\": \"1099887766\",\n  \"direccionInmueble\": \"Carrera 15 #80-10, Bogotá\",\n  \"valorAsegurado\": 15000000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/polizas/1/riesgos",
+              "host": ["{{base_url}}"],
+              "path": ["polizas", "1", "riesgos"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Riesgos",
+      "item": [
+        {
+          "name": "Cancelar riesgo (ID: 1)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/riesgos/1/cancelar",
+              "host": ["{{base_url}}"],
+              "path": ["riesgos", "1", "cancelar"]
+            }
+          }
+        },
+        {
+          "name": "Cancelar riesgo ya cancelado (Debe fallar)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/riesgos/1/cancelar",
+              "host": ["{{base_url}}"],
+              "path": ["riesgos", "1", "cancelar"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "CORE Mock",
+      "item": [
+        {
+          "name": "Enviar evento al CORE mock",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"evento\": \"ACTUALIZACION\",\n  \"polizaId\": 555\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/core-mock/evento",
+              "host": ["{{base_url}}"],
+              "path": ["core-mock", "evento"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Seguridad",
+      "item": [
+        {
+          "name": "Request SIN api-key (Debe retornar 401)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas",
+              "host": ["{{base_url}}"],
+              "path": ["polizas"]
+            }
+          }
+        },
+        {
+          "name": "Request con api-key INCORRECTA (Debe retornar 401)",
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "x-api-key",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "wrong-key",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/polizas",
+              "host": ["{{base_url}}"],
+              "path": ["polizas"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
